@@ -1,8 +1,11 @@
 # About me
 
-![ava](https://torindev.github.io/src/ava.jpg) * one
-* two
-* three
+![ava](https://torindev.github.io/src/ava.jpg) 
+
+* **Location:** Ukraine / Kharkiv
+* [LinkedIN](www.linkedin.com/in/dmitriy-torin-132685136)
+* torin.dmitriy@gmail.com
+* +38 (050) 888-2000 
 
 ***
 
