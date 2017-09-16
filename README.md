@@ -7,4 +7,4 @@
 
 ***
 
-* [Test](https://github.com/torindev/android-java-note/blob/master/text/android/H-ANDROID.md)
+* [Test](https://github.com/torindev/torindev.github.io/blob/master/docs/test-text.md)
