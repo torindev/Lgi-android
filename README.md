@@ -9,4 +9,4 @@
 
 ***
 
-* [Test](https://torindev.github.io/TEXT.html)
+* [Test](https://torindev.github.io/mycustom/TEXT.html)
