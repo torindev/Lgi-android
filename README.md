@@ -9,4 +9,4 @@
 
 ***
 
-* [Test](https://github.com/torindev/torindev.github.io/blob/master/TEXT.md)
+* [Test](https://torindev.github.io/TEXT.md)
