@@ -1,4 +1,4 @@
-Новый 1_06
+Новый 1_39
 
 # Заголовок
 ## Заголовок
@@ -9,4 +9,4 @@
 
 ***
 
-* [Test](https://torindev.github.io/TEXT.md)
+* [Test](https://torindev.github.io/TEXT.html)
