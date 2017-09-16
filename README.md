@@ -7,4 +7,4 @@
 
 ***
 
-* [Test](https://github.com/torindev/torindev.github.io/blob/master/test-text.md)
+* [Test](https://github.com/torindev/torindev.github.io/blob/master/TEXT.md)
