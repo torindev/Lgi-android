@@ -1,7 +1,16 @@
 # About me
 
+![ava](https://torindev.github.io/src/ava.jpg) * one
+* two
+* three
 
+***
 
-* [Test](https://torindev.github.io/mycustom/TEXT.html)
+### Portfolio
+
+* [Applications](https://torindev.github.io/apps/)
+* [Games](https://torindev.github.io/games/)
+
+### My contribution
+
 * [Knowledge](https://torindev.github.io/knowledge-booster/)
-* [My Apps](https://torindev.github.io/apps/)
