@@ -9,7 +9,7 @@
 
 ### Tools
 
-Android SDK, Java, SQL, SQLite, OOP, Gson, Picasso, EventBus, Soft skills
+Android SDK, Java, SQL, SQLite, Retrofit 2, OOP, Gson, Picasso, EventBus, Soft skills
 
 ### Portfolio
 
@@ -18,4 +18,4 @@ Android SDK, Java, SQL, SQLite, OOP, Gson, Picasso, EventBus, Soft skills
 
 ### My contribution
 
-* [Knowledge Booster](https://torindev.github.io/knowledge-booster/)
+* [blog](https://torindev.github.io/blog/)
