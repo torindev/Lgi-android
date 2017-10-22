@@ -5,3 +5,5 @@
 * Ukraine / Kharkiv
 * torin.dmitriy@gmail.com
 * +38 (050) 888-2000
+
+[Мой блог](https://torindev.github.io/blog/)
