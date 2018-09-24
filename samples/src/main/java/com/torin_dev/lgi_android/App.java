@@ -1,9 +1,9 @@
 package com.torin_dev.lgi_android;
 
 import android.app.Application;
-import android.os.Build;
 
-import c.github.lgi_android.Lgi;
+import com.github.torindev.lgi_android.Lgi;
+
 
 /**
  * Created by fatal on 24.09.18.
