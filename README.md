@@ -24,3 +24,16 @@ implementation 'com.github.torindev:Lgiandroid:0.1.0'
 ```
 
 **That's it.**
+
+### How to use
+
+```java
+public class App extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // set logging only on debug mode
+        Lgi.sLog = BuildConfig.DEBUG;
+    }
+}
+```

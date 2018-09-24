@@ -1,1 +1,1 @@
-include ':app', ':lgi-android'
+include ':samples', ':lgi-android'

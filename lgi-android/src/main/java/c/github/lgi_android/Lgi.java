@@ -25,9 +25,89 @@ import java.util.TimeZone;
 
 public class Lgi {
     public static boolean sLog = true;
-    public static boolean sShowLongString = true;
     public static String sTag = "fatal";
-    public static long sLongStringLength = 1100L;
+    public static int sStringMaxLength = 1100;
+    private static final String DELIMITER = ": ";
+    private static long sStartTime = 0;
+
+    public static void p() {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], "");
+    }
+
+    public static void p(String s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s);
+    }
+
+    public static void p(Object s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], getShortClassTag(s) + "\n" + s.toString());
+    }
+
+    public static void p(int s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(double s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(float s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(long s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(char s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(byte s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    public static void p(boolean s) {
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
+    }
+
+    private static void print(StackTraceElement ste, String s) {
+        String className = ste.getFileName().split("\\.")[0];
+        String method = ste.getMethodName();
+        log(getShortenedString(getFirstPart(className, method) + s));
+    }
+
+    public static void err() {
+        if (sLog) {
+            StackTraceElement ste = null;
+            ste = Thread.currentThread().getStackTrace()[3];
+
+            String str = getFirstPartErr(ste.getClassName(), ste.getMethodName(), ste.getFileName(), ste.getLineNumber());
+            log(str);
+        }
+    }
+
+    public static void err(String s) {
+        if (sLog) {
+            StackTraceElement ste = null;
+            ste = Thread.currentThread().getStackTrace()[3];
+            String str = getFirstPartErr(ste.getClassName(), ste.getMethodName(), ste.getFileName(), ste.getLineNumber());
+            log(str + " > " + s);
+        }
+    }
+
+    public static void err(String s, Throwable ex) {
+        if (sLog) {
+            err("Message: " + s);
+            android.util.Log.v(sTag, "stacktrace: ", ex);
+        }
+    }
+
+    public static void err(Throwable ex) {
+        if (sLog) {
+            err("Message: " + ex.getMessage());
+            android.util.Log.v(sTag, "stacktrace: ", ex);
+        }
+    }
 
     public static void i(String tag, String string) {
         if (sLog) android.util.Log.i(tag, string);
@@ -61,28 +141,39 @@ public class Lgi {
         if (sLog) android.util.Log.w(sTag, string);
     }
 
+    public static void toastShort(Context context, String s) {
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+    }
 
+    public static void toastLong(Context context, String s) {
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
+    }
 
-    private static final String SEPAR = ": ";
-    private static long sStartTime = 0;
+    private static String getFirstPart(String className, String method) {
+        StringBuilder sb = new StringBuilder("");
+        sb.append("[").append(className).append(".").append(method).append("]").append(DELIMITER);
+        return sb.toString();
+    }
 
-    // Выводит в лог имя класса и имя метода, в котором был вызван
-    public static void p() {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]");
+    private static String getFirstPartErr(String className, String method, String fileName, int lineNumber) {
+        StringBuilder sb = new StringBuilder("");
+        sb.append(className).append(".").append(method).append("(").append(fileName).append(":").append(lineNumber).append(")");
+        return sb.toString();
+    }
+
+    private static String getShortenedString(String s) {
+        if (s != null && s.length() <= sStringMaxLength) {
+            return s;
+        } else if (s != null && s.length() > sStringMaxLength) {
+            return s.substring(0, sStringMaxLength) + " <<NOT A FULL STRING>>";
+        } else {
+            return s;
         }
     }
 
-    // Выводит в лог имя класса + String переданный в параметре
-    public static void p(String s) {
+    private static void log(String s) {
         if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
+            android.util.Log.v(sTag, s);
         }
     }
 
@@ -97,35 +188,29 @@ public class Lgi {
                 sDiffTime = ((time() * 1.0d) - (sLastTime * 1.0d)) / 1000;
                 sLastTime = time();
             }
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s + ", " + sDiffTime + " seconds;");
+            print(Thread.currentThread().getStackTrace()[3], s + ", " + sDiffTime + " seconds;");
         }
     }
 
-    public static void p(Object s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + getShortClassTag(s) + "\n" + s.toString());
+    public static long time() {
+        return System.currentTimeMillis();
+    }
+
+    public static void startTime() {
+        sStartTime = time();
+    }
+
+    public static void endTime() {
+        if (sStartTime == 0) {
+            log("Error, startTime = 0. Don't use endTime() without startTime() before.");
+            return;
+        } else {
+            long diff = time() - sStartTime;
+            sStartTime = 0;
+            log("Time: " + diff + " ms.");
         }
     }
 
-    public static void printLongString(String s) {
-        if (sLog && sShowLongString) {
-            StackTraceElement ste = null;
-            ste = Thread.currentThread().getStackTrace()[3];
-            String str = ste.getClassName() + "." + ste.getMethodName() +
-                    "(" + ste.getFileName() + ":" + ste.getLineNumber() + ")";
-            if (s != null && s.length() <= 1100) {
-                log(str + " > " + s);
-            } else if (s != null && s.length() > 1100) {
-                log(str + " > " + s.substring(0, 1100) + " <<NOT A FULL STRING>>, see full in DEBUG");
-            }
-        }
-    }
 
     public static String getShortClassTag(Object cls) {
         if (cls == null) {
@@ -140,143 +225,6 @@ public class Lgi {
                 }
             }
             return simpleName + "[" + Integer.toHexString(System.identityHashCode(cls))  + "]";
-        }
-    }
-
-    public static void p(int s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(double s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(float s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(long s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(char s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(byte s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    public static void p(boolean s) {
-        if (sLog) {
-            StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-            String className = ste.getFileName().split("\\.")[0];
-            String method = ste.getMethodName();
-            log("[" + className + "." + method + "]" + SEPAR + s);
-        }
-    }
-
-    // просто перенос строки
-    public static void separatorLine() {
-        if (sLog) {
-            log("\t-\t-\t-\t-\t-");
-        }
-    }
-
-
-    public static long time() {
-        return System.currentTimeMillis();
-    }
-
-    public static void toastShort(Context context, String s) {
-        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void toastLong(Context context, String s) {
-        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
-    }
-
-    // выводит класс, метод, и строку, в которой был вызван
-    public static void err() {
-        if (sLog) {
-            StackTraceElement ste = null;
-            ste = Thread.currentThread().getStackTrace()[3];
-            String str = ste.getClassName() + "." + ste.getMethodName() +
-                    "(" + ste.getFileName() + ":" + ste.getLineNumber() + ")";
-            log(str);
-        }
-    }
-    // выводит класс, метод, и строку, в которой был вызван + текст
-    public static void err(String s) {
-        if (sLog) {
-            StackTraceElement ste = null;
-            ste = Thread.currentThread().getStackTrace()[3];
-            String str = ste.getClassName() + "." + ste.getMethodName() +
-                    "(" + ste.getFileName() + ":" + ste.getLineNumber() + ")";
-            log(str + " > " + s);
-        }
-    }
-
-    // выводит в лог String s и Exception
-    public static void err(String s, Throwable ex) {
-        if (sLog) {
-            err("Message: " + s);
-            android.util.Log.v(sTag, "stacktrace: ", ex);
-        }
-    }
-
-    public static void err(Throwable ex) {
-        if (sLog) {
-            err("Message: " + ex.getMessage());
-            android.util.Log.v(sTag, "stacktrace: ", ex);
-        }
-    }
-
-    // используется для замера промежутка времени
-    public static void startTime() {
-        sStartTime = time();
-    }
-
-    // используется для замера промежутка времени, возвращает время между
-    // startTime и endTime
-    public static void endTime() {
-        if (sStartTime == 0) {
-            log("Error, startTime = 0. Don't use endTime() without startTime() before.");
-            return;
-        } else {
-            long diff = time() - sStartTime;
-            sStartTime = 0;
-            log("Time: " + diff + " ms.");
         }
     }
 
@@ -299,12 +247,6 @@ public class Lgi {
         return new SimpleDateFormat(format).format(new Date(d));
     }
 
-    private static void log(String s) {
-        if (sLog) {
-            android.util.Log.v(sTag, s);
-        }
-    }
-
     public static class Utils {
 
         public static boolean isOnline(Context context) {
@@ -312,8 +254,9 @@ public class Lgi {
             ConnectivityManager manager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            if(manager == null)
+            if(manager == null) {
                 return false;
+            }
 
             // 3g-4g available
             boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
@@ -321,8 +264,6 @@ public class Lgi {
             // wifi available
             boolean isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                     .isConnectedOrConnecting();
-
-            System.out.println(is3g + " net " + isWifi);
 
             if (!is3g && !isWifi) {
                 return false;
