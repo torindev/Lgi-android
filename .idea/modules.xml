@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Lgiandroid.iml" filepath="$PROJECT_DIR$/Lgiandroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lgi-android/lgi-android.iml" filepath="$PROJECT_DIR$/lgi-android/lgi-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/samples/app.iml" filepath="$PROJECT_DIR$/samples/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lgi-android/lgi-android.iml" filepath="$PROJECT_DIR$/lgi-android/lgi-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samples/samples.iml" filepath="$PROJECT_DIR$/samples/samples.iml" />
     </modules>
   </component>
 </project>

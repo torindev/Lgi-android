@@ -39,7 +39,7 @@ public class Lgi {
     }
 
     public static void p(Object s) {
-        if (sLog) print(Thread.currentThread().getStackTrace()[3], getShortClassTag(s) + "\n" + s.toString());
+        if (sLog) print(Thread.currentThread().getStackTrace()[3], getShortClassTag(s));
     }
 
     public static void p(int s) {
@@ -237,7 +237,7 @@ public class Lgi {
                     simpleName = simpleName.substring(end + 1);
                 }
             }
-            return simpleName + "[" + Integer.toHexString(System.identityHashCode(cls))  + "]";
+            return simpleName + " [" + Integer.toHexString(System.identityHashCode(cls))  + "]";
         }
     }
 
@@ -262,6 +262,8 @@ public class Lgi {
 
     public static class Utils {
 
+        //TODO: !!! need permission
+        //TODO: <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         public static boolean isOnline(Context context) {
 
             ConnectivityManager manager = (ConnectivityManager) context
@@ -278,11 +280,7 @@ public class Lgi {
             boolean isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                     .isConnectedOrConnecting();
 
-            if (!is3g && !isWifi) {
-                return false;
-            } else
-                return true;
-
+            return is3g || isWifi;
         }
 
         public static boolean hideKeyboard(@NonNull Activity activity) {
