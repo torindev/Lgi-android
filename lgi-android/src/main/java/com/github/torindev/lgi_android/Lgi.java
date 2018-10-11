@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -281,6 +282,13 @@ public class Lgi {
                     .isConnectedOrConnecting();
 
             return is3g || isWifi;
+        }
+
+        public static void showKeyboard(EditText editText) {
+            InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+            }
         }
 
         public static boolean hideKeyboard(@NonNull Activity activity) {
