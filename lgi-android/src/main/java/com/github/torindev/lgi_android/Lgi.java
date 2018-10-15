@@ -43,6 +43,14 @@ public class Lgi {
         if (sLog) print(Thread.currentThread().getStackTrace()[3], getShortClassTag(s));
     }
 
+    public static String getName(Object s) {
+        if (sLog) {
+            return getShortClassTag(s);
+        } else {
+            return "";
+        }
+    }
+
     public static void p(int s) {
         if (sLog) print(Thread.currentThread().getStackTrace()[3], s + "");
     }

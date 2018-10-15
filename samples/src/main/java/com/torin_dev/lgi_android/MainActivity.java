@@ -15,5 +15,7 @@ public class MainActivity extends AppCompatActivity {
         Lgi.p();
         Lgi.p(11);
         Lgi.p("hello");
+        String name = Lgi.getName(this);
+        Lgi.p("name: " + name);
     }
 }
