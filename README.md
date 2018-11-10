@@ -51,7 +51,7 @@ static boolean isOnline(Context context)
 ***
 
 ```java
-static boolean isWifiNetworkAvailable(Context context)
+static boolean isWifiTurnOn(Context context)
 ```
 
 Возвращает true, если включен wifi на устройстве. Не проверяет наличие доступа в инет.

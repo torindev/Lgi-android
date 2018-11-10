@@ -42,7 +42,7 @@ public class LgiUtils {
     //TODO: <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     //TODO: <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
     //TODO: <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
-    public static boolean isWifiNetworkAvailable(Context context) {
+    public static boolean isWifiTurnOn(Context context) {
         boolean wifiEnabled = false;
         WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifi != null) {
