@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -35,6 +36,19 @@ public class LgiUtils {
         boolean isWifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
                 .isConnectedOrConnecting();
         return is3g || isWifi;
+    }
+
+    //TODO: !!! need permission
+    //TODO: <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    //TODO: <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    //TODO: <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" >
+    public static boolean isWifiNetworkAvailable(Context context) {
+        boolean wifiEnabled = false;
+        WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifi != null) {
+            wifiEnabled = wifi.isWifiEnabled();
+        }
+        return wifiEnabled;
     }
 
     public static void showKeyboard(EditText editText) {
